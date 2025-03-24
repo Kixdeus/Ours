@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Access</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function checkLogin() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            if ((username === "moon" && password === "1024") || (username === "nami" && password === "1024")) {
+                window.location.href = "home.html"; // Redirect to home page
+            } else {
+                alert("Access Denied! Wrong username or password.");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Private Login</h2>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <button onclick="checkLogin()">Login</button>
+    </div>
+
+</body>
+</html>

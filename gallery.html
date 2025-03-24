@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Gallery</h1>
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="gallery.html">Gallery</a>
+        </nav>
+    </header>
+
+    <section class="gallery-container">
+        <h2>Our Memories</h2>
+
+        <!-- Main Floating Panel -->
+        <div class="floating-panel">
+
+            <!-- White Floating Table for Predefined Images -->
+            <div class="transparent-floating-table">
+                <h1>Here are some pictures from our journey together.</h1p>
+                <div class="gallery">
+                    <img src="img1.jpg" alt="Memory 1">
+                    <img src="img2.jpg" alt="Memory 2">
+                    <img src="img3.jpg" alt="Memory 3">
+                </div>
+            </div>
+
+            <!-- Controls for Media Upload & Toggle -->
+            <div class="gallery-controls">
+                <button id="showImages">🖼️ Images</button>
+                <button id="showVideos">🎥 Videos</button>
+                <input type="file" id="fileInput" accept="image/*, video/*" multiple hidden>
+                <button id="addMediaButton">+ Add Photo/Video</button>
+            </div>
+
+        </div>
+
+        <!-- Floating Section for Uploaded Media -->
+        <div class="media-container">
+            <div id="imageGallery" class="media-table hidden">
+                <h3>📷 All Images</h3>
+                <div class="media-content"></div>
+            </div>
+            <div id="videoGallery" class="media-table hidden">
+                <h3>🎬 All Videos</h3>
+                <div class="media-content"></div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        document.getElementById('addMediaButton').addEventListener('click', function() {
+            document.getElementById('fileInput').click();
+        });
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const imageGallery = document.getElementById('imageGallery').querySelector('.media-content');
+            const videoGallery = document.getElementById('videoGallery').querySelector('.media-content');
+
+            for (let file of event.target.files) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const mediaElement = file.type.startsWith('video') ? 
+                        document.createElement('video') : document.createElement('img');
+                    mediaElement.src = e.target.result;
+                    mediaElement.controls = file.type.startsWith('video');
+                    mediaElement.classList.add('media-item');
+
+                    if (file.type.startsWith('video')) {
+                        videoGallery.prepend(mediaElement); // Adds new videos at the top
+                        document.getElementById('videoGallery').classList.remove('hidden');
+                    } else {
+                        imageGallery.prepend(mediaElement); // Adds new images at the top
+                        document.getElementById('imageGallery').classList.remove('hidden');
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Show only Images or Videos when clicked
+        document.getElementById('showImages').addEventListener('click', function() {
+            document.getElementById('imageGallery').classList.remove('hidden');
+            document.getElementById('videoGallery').classList.add('hidden');
+        });
+
+        document.getElementById('showVideos').addEventListener('click', function() {
+            document.getElementById('videoGallery').classList.remove('hidden');
+            document.getElementById('imageGallery').classList.add('hidden');
+        });
+
+    </script>
+
+</body>
+</html>
